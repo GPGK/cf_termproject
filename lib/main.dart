@@ -1,3 +1,4 @@
+import 'package:cf_termproject/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Washing Machine Clicker',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/timeselect',
+      initialRoute: '/homepage',
       routes: {
         '/homepage': (context) => HomePage(),
         '/mypage': (context) => MyPage(),
