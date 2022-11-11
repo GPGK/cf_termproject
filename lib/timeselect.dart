@@ -10,14 +10,20 @@ import 'reservepage.dart';
 
 
 class MyTime{
-  static String start_Day = '';
-  static String end_Day = '';
+  static String set_Day = '';
 
-  static String start_Hour = '';
-  static String end_Hour = '';
 
-  static String start_Min = '';
-  static String end_Min = '';
+  static String start_Hour = '0';
+  static bool select_stHour = false;
+
+  static String end_Hour = '0';
+  static bool select_edHour = false;
+
+  static String start_Min = '0';
+  static bool select_stMin = false;
+
+  static String end_Min = '0';
+  static bool select_edMin = false;
 
 }
 
@@ -74,6 +80,8 @@ class _TimeSelectState extends State<TimeSelect> {
   bool dDay_2 = false;
   late List<bool> isSelected;
 
+  MyTime myTime = MyTime();
+
   void initState(){
     isSelected = [dDay_0, dDay_1, dDay_2];
     super.initState();
@@ -81,16 +89,22 @@ class _TimeSelectState extends State<TimeSelect> {
 
   void selectToggle(value) {
     if (value == 0) {
+      MyTime.set_Day = getToday(DaySelect: value);
+
       dDay_0 = true;
       dDay_1 = false;
       dDay_2 = false;
     }
-    if (value == 1) {
+    else if (value == 1) {
+      MyTime.set_Day = getToday(DaySelect: value);
+
       dDay_0 = false;
       dDay_1 = true;
       dDay_2 = false;
     }
-    if (value == 2) {
+    else if (value == 2) {
+      MyTime.set_Day = getToday(DaySelect: value);
+
       dDay_0 = false;
       dDay_1 = false;
       dDay_2 = true;
@@ -115,18 +129,27 @@ class _TimeSelectState extends State<TimeSelect> {
     int diff_hr = diff ~/ 60;
     int diff_min = diff % 60;
 
-    if(S_H == '0' && S_M == '0' && E_H == '0' && E_M == '0' ) {
+    if(MyTime.select_edHour == true || MyTime.select_edMin == true) {
+      if(diff <= 0){
+        return '시간을 다시 설정해주세요.';
+      }
+
+    }
+
+    else {
       return '시간 계산중 . . . ';
     }
 
-    if(diff <= 0){
-      return '시간이 비정상적입니다.';
-    }
+
+   // if(S_H == '0' && S_M == '0' && E_H == '0' && E_M == '0' ) {
+   //   return '시간 계산중 . . . ';
+   // }
+
 
     return '총 예약시간:    ${diff_hr}시간  ${diff_min}분';
   }
   
-  int daySelect = 0;
+  //int daySelect = 0;
 
   String getToday({required int DaySelect}) {
     var now = DateTime.now();
@@ -151,6 +174,13 @@ class _TimeSelectState extends State<TimeSelect> {
       return '[건조기 2]';
   }
 
+  String getComplete ({required String day, required String S_H, required String S_M,
+    required String E_H, required String E_M}) {
+
+
+    return
+  }
+
 
   ///////////////////////////////////////////////
 
@@ -159,6 +189,8 @@ class _TimeSelectState extends State<TimeSelect> {
   Widget build(BuildContext context) {
 
     info = Provider.of<UserInfo>(context, listen: true);
+
+    MyTime.set_Day = getToday(DaySelect: 0);
 
 
     return Scaffold(
@@ -344,6 +376,8 @@ class _TimeSelectState extends State<TimeSelect> {
                               onChanged: (String? value){
                                 setState(() {
                                   _selectedValue_Hour_S = value!;
+                                  MyTime.select_stHour = true;
+                                  MyTime.start_Hour = value;
                                 });
                               },
                             ),
@@ -372,6 +406,8 @@ class _TimeSelectState extends State<TimeSelect> {
                               onChanged: (String? value){
                                 setState(() {
                                   _selectedValue_Minute_S = value!;
+                                  MyTime.select_stMin = true;
+                                  MyTime.start_Min = value;
                                 });
                               },
                             ),
@@ -425,6 +461,8 @@ class _TimeSelectState extends State<TimeSelect> {
                               onChanged: (String? value){
                                 setState(() {
                                   _selectedValue_Hour_E = value!;
+                                  MyTime.select_edHour = true;
+                                  MyTime.end_Hour = value;
                                 });
                               },
                             ),
@@ -453,6 +491,8 @@ class _TimeSelectState extends State<TimeSelect> {
                               onChanged: (String? value){
                                 setState(() {
                                   _selectedValue_Minute_E = value!;
+                                  MyTime.select_edMin = true;
+                                  MyTime.end_Min = value;
                                 });
                               },
                             ),
@@ -485,7 +525,9 @@ class _TimeSelectState extends State<TimeSelect> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           ElevatedButton(
-                              onPressed: (){},
+                              onPressed: (){
+
+                              },
                               child: const Text('예약하기')),
                           const Text('    '),
                           ElevatedButton(
