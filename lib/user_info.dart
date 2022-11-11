@@ -1,6 +1,37 @@
-class UserInfo{
-  String dong;
-  int choo_muchine;
+import 'package:flutter/material.dart';
 
-  UserInfo(this.dong, this.choo_muchine);
+class UserInfo extends ChangeNotifier{
+  String _userName = "", _userId = "", _password = "", _dormitory = "";
+  int _macNumber = 0;
+
+  String getUserName() { return _userName; }
+  String getUserId(){ return _userId; }
+  String getPassword(){ return _password; }
+  String getDormitory(){ return _dormitory; }
+  int getMacNumber() {return _macNumber;}
+
+  void putUserName(String name){
+    _userName = name;
+    notifyListeners();
+  }
+  void putUserId(String id){
+    _userId = id;
+    notifyListeners();
+  }
+  void putPassword(String password){
+    _password = password;
+    notifyListeners();
+  }
+  void putDormitory(String dormitory){
+    _dormitory = dormitory;
+    notifyListeners();
+  }
+  void putMacNumber(int mac_number){
+    _macNumber = mac_number;
+    notifyListeners();
+  }
+
+  bool isEmpty(String str){
+    return (str == "") ? true : false;
+  }
 }

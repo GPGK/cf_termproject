@@ -9,6 +9,20 @@ import 'mypage.dart';
 import 'reservepage.dart';
 
 
+class MyTime{
+  static String start_Day = '';
+  static String end_Day = '';
+
+  static String start_Hour = '';
+  static String end_Hour = '';
+
+  static String start_Min = '';
+  static String end_Min = '';
+
+}
+
+
+
 ///////////////////////////////////////////////////
 
 void main() => runApp(TimeSelect());
@@ -16,15 +30,16 @@ void main() => runApp(TimeSelect());
 class TimeSelect extends StatefulWidget {
   const TimeSelect({Key? key}) : super(key: key);
 
-  //final UserInfo user_info;
-  //TimeSelect({required this.user_info});
-
   @override
   State<TimeSelect> createState() => _TimeSelectState();
 }
 
 
 class _TimeSelectState extends State<TimeSelect> {
+
+  var info;
+
+  ////////////////////////////////////////////////
 
   final GlobalKey<AnimatedListState> _animatedlistKey = GlobalKey<AnimatedListState>();
   List<String> _items = [
@@ -64,7 +79,7 @@ class _TimeSelectState extends State<TimeSelect> {
     super.initState();
   }
 
-  void toggleSelect(value) {
+  void selectToggle(value) {
     if (value == 0) {
       dDay_0 = true;
       dDay_1 = false;
@@ -121,15 +136,34 @@ class _TimeSelectState extends State<TimeSelect> {
     return strToday;
   }
 
-  ///////////////////////////////////////////////
+  String getMName({required int index}) {
+    if(index == 0)
+      return '[세탁기 1]';
+    if(index == 1)
+      return '[세탁기 2]';
+    if(index == 2)
+      return '[세탁기 3]';
+    if(index == 3)
+      return '[세탁기 4]';
+    if(index == 4)
+      return '[건조기 1]';
+    else
+      return '[건조기 2]';
+  }
 
+
+  ///////////////////////////////////////////////
 
 
   @override
   Widget build(BuildContext context) {
+
+    info = Provider.of<UserInfo>(context, listen: true);
+
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("시간 예약 페이지"),
+        title: Text('${info.getDormitory()}동 ${getMName(index: info.getMacNumber())} 시간 예약 페이지'),
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -239,7 +273,7 @@ class _TimeSelectState extends State<TimeSelect> {
                   children: [
                     ToggleButtons(
                       isSelected: isSelected,
-                      onPressed: toggleSelect,
+                      onPressed: selectToggle,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),

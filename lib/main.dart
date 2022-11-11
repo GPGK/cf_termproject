@@ -7,6 +7,7 @@ import 'mypage.dart';
 import 'reservepage.dart';
 import 'timeselect.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -14,16 +15,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Washing Machine Clicker',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/homepage',
-      routes: {
-        '/homepage': (context) => HomePage(),
-        '/mypage': (context) => MyPage(),
-        '/reservepage': (context) => ReservePage(),
-        '/timeselect': (context) => TimeSelect(),
-       },
+    return ChangeNotifierProvider<UserInfo>(
+      create: (_) => UserInfo(),
+      child: MaterialApp(
+        title: 'Washing Machine Clicker',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        initialRoute: '/homepage',
+        routes: {
+          '/homepage': (context) => HomePage(),
+          '/mypage': (context) => MyPage(),
+          '/reservepage': (context) => ReservePage(),
+          '/timeselect': (context) => TimeSelect(),
+        },
+      ),
     );
   }
 }

@@ -42,13 +42,12 @@ String MuchineName({required int Index}) {
   return muchineName;
 }
 
-final You = UserInfo('오름', 0);
 
 ////////////////////////////////////////////////////////////////////
 
-void main() {
-  runApp(const HomePage());
-}
+//void main() {
+//  runApp(const HomePage());
+//}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -76,6 +75,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  var info;
+
+
   @override
   Widget build(BuildContext context) {
     final List<String> M_Name = <String>[
@@ -85,6 +88,12 @@ class _MyHomePageState extends State<MyHomePage> {
     final List<String> Time_E = <String>[
       '22-11-09 08:00', '22-11-09 10:00', '22-11-09 12:00','22-11-09 14:00', '미사용중', '미사용중'];
 
+
+    info = Provider.of<UserInfo>(context, listen: true);
+
+
+    // <<<<< 더미 >>>>>>
+    info.putDormitory('오름');
 
     return Scaffold(
         appBar: AppBar(
@@ -155,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Flexible(
                         flex: 1,
                         fit: FlexFit.tight,
-                        child: Text('< ${You.dong}동 예약 선택페이지 >', textAlign: TextAlign.center,),
+                        child: Text('< ${info.getDormitory()}동 예약 선택페이지 >', textAlign: TextAlign.center,),
                       ),
                     ],
                   ),
@@ -215,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: IconButton(
                                       icon: Icon(MyIcons.MuchineIcon(Index: index), size: 50,),
                                       onPressed: (){
-                                        You.choo_muchine = index;
+                                        info.putMacNumber(index);
                                         print(index);
                                         Navigator.push(context, MaterialPageRoute(
                                             builder: (context) => TimeSelect())
